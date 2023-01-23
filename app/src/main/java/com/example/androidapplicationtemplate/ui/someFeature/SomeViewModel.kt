@@ -47,7 +47,9 @@ class SomeViewModel @Inject constructor(
 
 	private fun doOperation1() {
 		viewModelScope.launch {
-			val result = wikiUseCase.invoke()
+			val result = wikiUseCase.invoke().collect {
+
+			}
 			_state.value = SomeState.State1
 		}
 	}

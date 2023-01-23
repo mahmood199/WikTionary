@@ -7,6 +7,6 @@ import retrofit2.http.GET
 interface WikiService {
 
 	@GET("/w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&generator=prefixsearch&redirects=1&formatversion=2&piprop=thumbnail&pithumbsize=50&pilimit=10&wbptterms=description&gpssearch=Sachin+T&gpslimit=10")
-	suspend fun getWiki(request : Request) : List<Response>
+	suspend fun getWiki() : List<Response>
 
 }
