@@ -1,4 +1,4 @@
-package com.example.androidapplicationtemplate.core.network
+package com.example.androidapplicationtemplate.core.util
 
 sealed class Resource<out T> {
 
