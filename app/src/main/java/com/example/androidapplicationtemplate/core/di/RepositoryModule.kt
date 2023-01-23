@@ -3,6 +3,7 @@ package com.example.androidapplicationtemplate.core.di
 import com.example.androidapplicationtemplate.data.local.localDataSource.SomeLocalDataSource
 import com.example.androidapplicationtemplate.data.local.localDataSource.WikiLocalDataSource
 import com.example.androidapplicationtemplate.data.remote.remoteDataSource.SomeRemoteDataSource
+import com.example.androidapplicationtemplate.data.remote.remoteDataSource.WikiRemoteDataSource
 import com.example.androidapplicationtemplate.domain.repository.SomeRepository
 import com.example.androidapplicationtemplate.data.repositoryImpl.SomeRepositoryImpl
 import com.example.androidapplicationtemplate.data.repositoryImpl.WikiRepositoryImpl
@@ -26,9 +27,10 @@ object RepositoryModule {
 
 	@Provides
 	fun provideWikiRepository(
-		wikiLocalDataSource: WikiLocalDataSource
+		wikiLocalDataSource: WikiLocalDataSource,
+		wikiRemoteDataSource: WikiRemoteDataSource
 	): WikiRepository {
-		return WikiRepositoryImpl(wikiLocalDataSource)
+		return WikiRepositoryImpl(wikiLocalDataSource, wikiRemoteDataSource)
 	}
 
 }
