@@ -1,6 +1,6 @@
 package com.example.androidapplicationtemplate.domain.usecase
 
-import com.example.androidapplicationtemplate.core.network.Resource
+import com.example.androidapplicationtemplate.core.util.Resource
 import com.example.androidapplicationtemplate.domain.repository.SomeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
