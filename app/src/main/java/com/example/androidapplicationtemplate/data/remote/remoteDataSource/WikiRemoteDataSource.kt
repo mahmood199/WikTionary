@@ -10,7 +10,7 @@ class WikiRemoteDataSource @Inject constructor(
 ) {
 
 	suspend fun get(): List<Response> {
-		return wikiService.getWiki(Request(1))
+		return wikiService.getWiki()
 	}
 
 }

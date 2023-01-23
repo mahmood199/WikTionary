@@ -12,7 +12,7 @@ class GetWikiUseCase @Inject constructor(
     private val wikiRepository: WikiRepository,
 ) {
 
-    operator fun invoke(): Flow<Any> = flow {
+    suspend operator fun invoke(): Flow<Any> = flow {
         emit(Resource.Loading)
         val result = wikiRepository.someCrudOperation()
         emit(result)
