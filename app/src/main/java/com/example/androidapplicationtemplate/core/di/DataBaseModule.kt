@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataBaseModule {
 
-    const val DB_NAME = "wiki_db"
+    private const val DB_NAME = "wiki_db"
 
     @Provides
     @Singleton
