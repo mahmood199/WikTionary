@@ -2,6 +2,7 @@ package com.example.androidapplicationtemplate.ui.someFeature
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidapplicationtemplate.domain.usecase.GetWikiUseCase
 import com.example.androidapplicationtemplate.domain.usecase.SomeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -11,7 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SomeViewModel @Inject constructor(
-	private val someUseCase: SomeUseCase
+	private val someUseCase: SomeUseCase,
+	private val wikiUseCase: GetWikiUseCase
 ) : ViewModel() {
 
 	init {
@@ -44,7 +46,10 @@ class SomeViewModel @Inject constructor(
 	}
 
 	private fun doOperation1() {
-
+		viewModelScope.launch {
+			val result = wikiUseCase.invoke()
+			_state.value = SomeState.State1
+		}
 	}
 
 	private fun doOperation2() {

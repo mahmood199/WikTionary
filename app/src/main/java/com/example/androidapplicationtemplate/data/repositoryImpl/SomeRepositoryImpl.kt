@@ -1,6 +1,6 @@
 package com.example.androidapplicationtemplate.data.repositoryImpl
 
-import com.example.androidapplicationtemplate.core.network.Resource
+import com.example.androidapplicationtemplate.core.util.Resource
 import com.example.androidapplicationtemplate.data.local.localDataSource.SomeLocalDataSource
 import com.example.androidapplicationtemplate.data.remote.remoteDataSource.SomeRemoteDataSource
 import com.example.androidapplicationtemplate.domain.repository.SomeRepository
