@@ -43,12 +43,21 @@ class SomeActivity : AppCompatActivity() {
 	private fun setUIState(it: SomeState) {
 		when(it) {
 			SomeState.Idle -> {}
-			SomeState.State1 -> {
-				Toast.makeText(this, "Party", Toast.LENGTH_SHORT).show()
+			is SomeState.State1 -> {
+				Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
 			}
-			SomeState.State2 -> TODO()
-			SomeState.State3 -> TODO()
-			SomeState.State4 -> TODO()
+			SomeState.State2 -> {
+
+			}
+			SomeState.State3 -> {
+
+			}
+			SomeState.State4 -> {
+
+			}
+			SomeState.Loading -> {
+
+			}
 		}
 	}
 

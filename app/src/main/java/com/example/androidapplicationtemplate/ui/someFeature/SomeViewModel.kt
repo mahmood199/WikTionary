@@ -2,6 +2,7 @@ package com.example.androidapplicationtemplate.ui.someFeature
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidapplicationtemplate.core.util.Resource
 import com.example.androidapplicationtemplate.domain.usecase.GetWikiUseCase
 import com.example.androidapplicationtemplate.domain.usecase.SomeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,10 +48,23 @@ class SomeViewModel @Inject constructor(
 
 	private fun doOperation1() {
 		viewModelScope.launch {
+			_state.value = SomeState.Loading
 			val result = wikiUseCase.invoke().collect {
+				when(it) {
+					Resource.Default -> {
 
+					}
+					is Resource.Failure -> {
+
+					}
+					Resource.Loading -> {
+
+					}
+					is Resource.Success -> {
+						_state.value = SomeState.State1("Yesss")
+					}
+				}
 			}
-			_state.value = SomeState.State1
 		}
 	}
 
