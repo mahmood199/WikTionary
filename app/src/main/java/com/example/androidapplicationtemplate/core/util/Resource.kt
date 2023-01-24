@@ -24,3 +24,11 @@ enum class FailureStatus {
     USER_UNAPPROVED,
     OTHER
 }
+
+object FailureCode {
+    const val BAD_REQUEST = 400
+    const val UNAUTHORISED = 401
+    const val FORBIDDEN = 403
+    const val RESOURCE_NOT_FOUND = 404
+    const val REQUEST_TIMEOUT = 408
+}
