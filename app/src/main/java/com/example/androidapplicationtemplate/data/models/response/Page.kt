@@ -7,6 +7,6 @@ data class Page(
     @SerializedName("ns") val ns: Int,
     @SerializedName("pageid") val pageId: Int,
     @SerializedName("terms") val terms: Terms,
-    @SerializedName("thumbnail") val thumbnail: Thumbnail,
+    @SerializedName("thumbnail") val thumbnail: Thumbnail? = null,
     @SerializedName("title") val title: String,
 )

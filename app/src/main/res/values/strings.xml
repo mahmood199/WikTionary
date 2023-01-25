@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">WikTionary</string>
-    <string name="something_went_wrong">WikTionary</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>
