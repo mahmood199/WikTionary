@@ -8,8 +8,6 @@ sealed class WikiState {
     data class SendResult(val pages: List<Page>) : WikiState()
     data class Error(val failureStatus: FailureStatus, val message: String?) : WikiState()
     data class SendPaginatedResult(val pages: List<Page>) : WikiState()
-    object State3 : WikiState()
-    object State4 : WikiState()
     object Loading : WikiState()
 
 }
