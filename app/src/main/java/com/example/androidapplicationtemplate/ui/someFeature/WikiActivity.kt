@@ -15,10 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SomeActivity : AppCompatActivity() {
+class WikiActivity : AppCompatActivity() {
 
 	private lateinit var binding : ActivitySomeBinding
-	private val someViewModel : SomeViewModel by viewModels()
+	private val wikiViewModel : WikiViewModel by viewModels()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -26,46 +26,46 @@ class SomeActivity : AppCompatActivity() {
 		setContentView(binding.root)
 		setObservers()
 		binding.rvWiki.makeGone()
-		triggerAction(SomeIntent.Intent1)
+		triggerAction(WikiIntent.Intent1)
 	}
 
 	private fun setObservers() {
 		lifecycleScope.launch {
-			someViewModel.state.collect {
+			wikiViewModel.state.collect {
 				setUIState(it)
 			}
 		}
 
 		lifecycleScope.launch {
-			someViewModel.effect.collect {
+			wikiViewModel.effect.collect {
 				setUIEffect(it)
 			}
 		}
 	}
 
-	private fun setUIState(it: SomeState) {
+	private fun setUIState(it: WikiState) {
 		when(it) {
-			SomeState.Idle -> {}
-			is SomeState.State1 -> {
+			WikiState.Idle -> {}
+			is WikiState.State1 -> {
 				binding.cpiWiki.makeGone()
 				setDataOnRecyclerViewAdapter(it.pages)
 			}
-			SomeState.State2 -> {
+			WikiState.State2 -> {
 
 			}
-			SomeState.State3 -> {
+			WikiState.State3 -> {
 
 			}
-			SomeState.State4 -> {
+			WikiState.State4 -> {
 
 			}
-			SomeState.Loading -> {
+			WikiState.Loading -> {
 				binding.cpiWiki.apply {
 
 					makeVisible()
 				}
 			}
-			is SomeState.Error -> {
+			is WikiState.Error -> {
 				SnackBarBuilder.getSnackbar(this,
                     it.message ?: getString(R.string.something_went_wrong),
                     Snackbar.LENGTH_SHORT)
@@ -80,18 +80,18 @@ class SomeActivity : AppCompatActivity() {
 		}
 	}
 
-	private fun setUIEffect(it: SomeEffect) {
+	private fun setUIEffect(it: WikiEffect) {
 		when(it) {
-			SomeEffect.Effect1 -> TODO()
-			SomeEffect.Effect2 -> TODO()
-			SomeEffect.Effect3 -> TODO()
-			SomeEffect.Effect4 -> TODO()
+			WikiEffect.Effect1 -> TODO()
+			WikiEffect.Effect2 -> TODO()
+			WikiEffect.Effect3 -> TODO()
+			WikiEffect.Effect4 -> TODO()
 		}
 	}
 
-	private fun triggerAction(it: SomeIntent) {
+	private fun triggerAction(it: WikiIntent) {
 		lifecycleScope.launch {
-			someViewModel.intents.send(it)
+			wikiViewModel.intents.send(it)
 		}
 	}
 

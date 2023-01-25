@@ -3,9 +3,8 @@ package com.example.androidapplicationtemplate.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.androidapplicationtemplate.R
 import com.example.androidapplicationtemplate.databinding.ActivityMainBinding
-import com.example.androidapplicationtemplate.ui.someFeature.SomeActivity
+import com.example.androidapplicationtemplate.ui.someFeature.WikiActivity
 
 class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
@@ -16,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 		setContentView(binding.root)
 
 		binding.btnGoDifferentScreen.setOnClickListener {
-			startActivity(Intent(this, SomeActivity::class.java))
+			startActivity(Intent(this, WikiActivity::class.java))
 		}
 
 	}

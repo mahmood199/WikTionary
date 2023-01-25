@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SomeViewModel @Inject constructor(
+class WikiViewModel @Inject constructor(
 	private val someUseCase: SomeUseCase,
 	private val wikiUseCase: GetWikiUseCase
 ) : ViewModel() {
@@ -21,15 +21,15 @@ class SomeViewModel @Inject constructor(
 	    receiveIntents()
 	}
 
-	val intents: Channel<SomeIntent> =
+	val intents: Channel<WikiIntent> =
 		Channel(Channel.UNLIMITED)
 
-	private val _state = MutableStateFlow<SomeState>(SomeState.Idle)
-	val state: StateFlow<SomeState>
+	private val _state = MutableStateFlow<WikiState>(WikiState.Idle)
+	val state: StateFlow<WikiState>
 		get() = _state
 
-	private val _effect = Channel<SomeEffect>()
-	val effect: Flow<SomeEffect>
+	private val _effect = Channel<WikiEffect>()
+	val effect: Flow<WikiEffect>
 		get() = _effect.receiveAsFlow()
 
 
@@ -37,10 +37,10 @@ class SomeViewModel @Inject constructor(
 		viewModelScope.launch {
 			intents.consumeAsFlow().collect {
 				when(it) {
-					SomeIntent.Intent1 -> doOperation1()
-					SomeIntent.Intent2 -> doOperation2()
-					SomeIntent.Intent3 -> doOperation3()
-					SomeIntent.Intent4 -> doOperation4()
+					WikiIntent.Intent1 -> doOperation1()
+					WikiIntent.Intent2 -> doOperation2()
+					WikiIntent.Intent3 -> doOperation3()
+					WikiIntent.Intent4 -> doOperation4()
 				}
 			}
 		}
@@ -48,17 +48,17 @@ class SomeViewModel @Inject constructor(
 
 	private fun doOperation1() {
 		viewModelScope.launch {
-			_state.value = SomeState.Loading
+			_state.value = WikiState.Loading
 			val result = wikiUseCase.invoke().collect {
 				when(it) {
 					is Resource.Failure -> {
-						_state.value = SomeState.Error(it.failureStatus, it.message)
+						_state.value = WikiState.Error(it.failureStatus, it.message)
 					}
 					Resource.Loading -> {
-						_state.value = SomeState.Loading
+						_state.value = WikiState.Loading
 					}
 					is Resource.Success -> {
-						_state.value = SomeState.State1(it.value.query.pages)
+						_state.value = WikiState.State1(it.value.query.pages)
 					}
 					else -> {}
 				}
