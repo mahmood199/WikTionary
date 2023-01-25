@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.androidapplicationtemplate.R
 import com.example.androidapplicationtemplate.core.extension.makeGone
 import com.example.androidapplicationtemplate.core.extension.makeVisible
@@ -19,14 +21,50 @@ class WikiActivity : AppCompatActivity() {
 
 	private lateinit var binding : ActivitySomeBinding
 	private val wikiViewModel : WikiViewModel by viewModels()
+	private val wikiAdapter by lazy {
+		WikiAdapter(mutableListOf())
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		binding = ActivitySomeBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		setObservers()
+		setUpViews()
+		triggerAction(WikiIntent.GetInitialData)
+	}
+
+	private fun setUpViews() {
 		binding.rvWiki.makeGone()
-		triggerAction(WikiIntent.Intent1)
+		setRecyclerViewScrollListener()
+	}
+
+	private fun setRecyclerViewScrollListener() {
+		binding.apply {
+			rvWiki.adapter = wikiAdapter
+			rvWiki.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+				override fun onScrollStateChanged(
+					recyclerView: RecyclerView,
+					newState: Int
+				) {
+					super.onScrollStateChanged(recyclerView, newState)
+
+					val lastItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastVisibleItemPosition()
+
+					val rvItemCount = rvWiki.adapter?.itemCount!!
+					val tCount = WikiViewModel.LIMIT
+
+					triggerAction(
+						WikiIntent.GetPaginatedResult(
+							lastItemPosition,
+							rvItemCount,
+							tCount
+						)
+					)
+				}
+			})
+		}
 	}
 
 	private fun setObservers() {
@@ -46,12 +84,12 @@ class WikiActivity : AppCompatActivity() {
 	private fun setUIState(it: WikiState) {
 		when(it) {
 			WikiState.Idle -> {}
-			is WikiState.State1 -> {
+			is WikiState.SendResult -> {
 				binding.cpiWiki.makeGone()
 				setDataOnRecyclerViewAdapter(it.pages)
 			}
-			WikiState.State2 -> {
-
+			is WikiState.SendPaginatedResult -> {
+				appendPagesToTheEndOfList(it.pages)
 			}
 			WikiState.State3 -> {
 
@@ -61,7 +99,6 @@ class WikiActivity : AppCompatActivity() {
 			}
 			WikiState.Loading -> {
 				binding.cpiWiki.apply {
-
 					makeVisible()
 				}
 			}
@@ -73,10 +110,16 @@ class WikiActivity : AppCompatActivity() {
 		}
 	}
 
+	private fun appendPagesToTheEndOfList(pages: List<Page>) {
+		binding.rvWiki.apply {
+			(adapter as WikiAdapter).addItems(pages.toMutableList())
+		}
+	}
+
 	private fun setDataOnRecyclerViewAdapter(pages: List<Page>) {
 		binding.rvWiki.apply {
 			makeVisible()
-			adapter = WikiAdapter(pages.toMutableList())
+			(adapter as WikiAdapter).addItems(pages.toMutableList())
 		}
 	}
 

@@ -2,7 +2,11 @@ package com.example.androidapplicationtemplate.ui.someFeature
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidapplicationtemplate.core.util.FailureStatus
 import com.example.androidapplicationtemplate.core.util.Resource
+import com.example.androidapplicationtemplate.data.models.entity.PagingEntity
+import com.example.androidapplicationtemplate.data.models.response.Page
+import com.example.androidapplicationtemplate.domain.usecase.AllowPaginationUseCase
 import com.example.androidapplicationtemplate.domain.usecase.GetWikiUseCase
 import com.example.androidapplicationtemplate.domain.usecase.SomeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,11 +18,12 @@ import javax.inject.Inject
 @HiltViewModel
 class WikiViewModel @Inject constructor(
 	private val someUseCase: SomeUseCase,
-	private val wikiUseCase: GetWikiUseCase
+	private val wikiUseCase: GetWikiUseCase,
+	private val allowPaginationUseCase: AllowPaginationUseCase
 ) : ViewModel() {
 
-	init {
-	    receiveIntents()
+	companion object {
+		const val LIMIT = 100
 	}
 
 	val intents: Channel<WikiIntent> =
@@ -32,21 +37,65 @@ class WikiViewModel @Inject constructor(
 	val effect: Flow<WikiEffect>
 		get() = _effect.receiveAsFlow()
 
+	var pageMutableList = mutableListOf<Page>()
+	var searchedQuery = ""
+	var offset = 0
+	val limit = 15
+
+	init {
+		receiveIntents()
+	}
 
 	private fun receiveIntents() {
 		viewModelScope.launch {
 			intents.consumeAsFlow().collect {
 				when(it) {
-					WikiIntent.Intent1 -> doOperation1()
+					WikiIntent.GetInitialData -> getWikis(0)
 					WikiIntent.Intent2 -> doOperation2()
 					WikiIntent.Intent3 -> doOperation3()
 					WikiIntent.Intent4 -> doOperation4()
+					is WikiIntent.GetPaginatedResult -> {
+						fetchPaginatedData(it.lastItemPosition, it.rvItemCount, it.tCount)
+					}
 				}
 			}
 		}
 	}
 
-	private fun doOperation1() {
+	private fun fetchPaginatedData(
+		lastItemPosition: Int,
+		recyclerViewItemsCount: Int,
+		totalCount: Int
+	) {
+		try {
+			val result = allowPaginationUseCase(
+				PagingEntity(
+					lastItemPosition = lastItemPosition,
+					rvItemCount = recyclerViewItemsCount,
+					tCount = totalCount,
+					dataRequested = false
+				)
+			)
+
+			when (result) {
+				is Resource.Success -> {
+					if (result.value) {
+						offset += limit
+						getWikis(offset)
+					}
+				} else -> {
+
+				}
+			}
+		} catch (e: Exception) {
+			e.printStackTrace()
+			_state.value = WikiState.Error(
+				FailureStatus.OTHER,
+				e.localizedMessage
+			)
+		}
+	}
+	private fun getWikis(i: Int) {
 		viewModelScope.launch {
 			_state.value = WikiState.Loading
 			val result = wikiUseCase.invoke().collect {
@@ -58,7 +107,10 @@ class WikiViewModel @Inject constructor(
 						_state.value = WikiState.Loading
 					}
 					is Resource.Success -> {
-						_state.value = WikiState.State1(it.value.query.pages)
+						if(i  == 0)
+							_state.value = WikiState.SendResult(it.value.query.pages)
+						else
+							_state.value = WikiState.SendPaginatedResult(it.value.query.pages)
 					}
 					else -> {}
 				}
