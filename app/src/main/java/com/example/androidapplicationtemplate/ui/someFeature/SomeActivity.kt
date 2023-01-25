@@ -7,6 +7,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.androidapplicationtemplate.R
 import com.example.androidapplicationtemplate.databinding.ActivitySomeBinding
+import com.example.androidapplicationtemplate.util.SnackBarBuilder
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -44,7 +46,10 @@ class SomeActivity : AppCompatActivity() {
 		when(it) {
 			SomeState.Idle -> {}
 			is SomeState.State1 -> {
+/*
 				Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+*/
+				binding.tvResponse.text = it.message
 			}
 			SomeState.State2 -> {
 
@@ -57,6 +62,11 @@ class SomeActivity : AppCompatActivity() {
 			}
 			SomeState.Loading -> {
 
+			}
+			is SomeState.Error -> {
+				SnackBarBuilder.getSnackbar(this,
+                    it.message ?: getString(R.string.something_went_wrong),
+                    Snackbar.LENGTH_SHORT)
 			}
 		}
 	}

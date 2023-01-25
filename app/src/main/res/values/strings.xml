@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">AndroidApplicationTemplate</string>
+    <string name="app_name">WikTionary</string>
+    <string name="something_went_wrong">WikTionary</string>
 </resources>

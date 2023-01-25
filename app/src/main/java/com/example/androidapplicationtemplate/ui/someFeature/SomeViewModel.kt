@@ -51,18 +51,16 @@ class SomeViewModel @Inject constructor(
 			_state.value = SomeState.Loading
 			val result = wikiUseCase.invoke().collect {
 				when(it) {
-					Resource.Default -> {
-
-					}
 					is Resource.Failure -> {
-
+						_state.value = SomeState.Error(it.failureStatus, it.message)
 					}
 					Resource.Loading -> {
-
+						_state.value = SomeState.Loading
 					}
 					is Resource.Success -> {
-						_state.value = SomeState.State1("Yesss")
+						_state.value = SomeState.State1(it.value.toString())
 					}
+					else -> {}
 				}
 			}
 		}
