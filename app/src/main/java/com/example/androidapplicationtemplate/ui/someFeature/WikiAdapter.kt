@@ -10,7 +10,7 @@ import com.example.androidapplicationtemplate.data.models.response.Page
 import com.example.androidapplicationtemplate.databinding.ItemWikiBinding
 
 class WikiAdapter(
-    private val list: MutableList<Page>,
+    private val pages: MutableList<Page>,
 ) : RecyclerView.Adapter<WikiAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,11 +20,16 @@ class WikiAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindData(list[position])
+        holder.bindData(pages[position])
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount() = pages.size
 
+    fun addItems(newPages: MutableList<Page>) {
+        val size = this.pages.size
+        this.pages.addAll(newPages)
+        notifyItemRangeChanged(size, newPages.size)
+    }
 
     inner class ViewHolder(private val binding: ItemWikiBinding) :
         RecyclerView.ViewHolder(binding.root) {
