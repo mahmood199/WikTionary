@@ -51,9 +51,6 @@ class WikiViewModel @Inject constructor(
 			intents.consumeAsFlow().collect {
 				when(it) {
 					WikiIntent.GetInitialData -> getWikis(0)
-					WikiIntent.Intent2 -> doOperation2()
-					WikiIntent.Intent3 -> doOperation3()
-					WikiIntent.Intent4 -> doOperation4()
 					is WikiIntent.GetPaginatedResult -> {
 						fetchPaginatedData(it.lastItemPosition, it.rvItemCount, it.tCount)
 					}
@@ -116,18 +113,6 @@ class WikiViewModel @Inject constructor(
 				}
 			}
 		}
-	}
-
-	private fun doOperation2() {
-		TODO("Not yet implemented")
-	}
-
-	private fun doOperation3() {
-		TODO("Not yet implemented")
-	}
-
-	private fun doOperation4() {
-		TODO("Not yet implemented")
 	}
 
 

@@ -91,12 +91,6 @@ class WikiActivity : AppCompatActivity() {
 			is WikiState.SendPaginatedResult -> {
 				appendPagesToTheEndOfList(it.pages)
 			}
-			WikiState.State3 -> {
-
-			}
-			WikiState.State4 -> {
-
-			}
 			WikiState.Loading -> {
 				binding.cpiWiki.apply {
 					makeVisible()
