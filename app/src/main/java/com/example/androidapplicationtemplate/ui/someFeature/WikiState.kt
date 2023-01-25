@@ -5,9 +5,9 @@ import com.example.androidapplicationtemplate.data.models.response.Page
 
 sealed class WikiState {
     object Idle : WikiState()
-    data class State1(val pages: List<Page>) : WikiState()
+    data class SendResult(val pages: List<Page>) : WikiState()
     data class Error(val failureStatus: FailureStatus, val message: String?) : WikiState()
-    object State2 : WikiState()
+    data class SendPaginatedResult(val pages: List<Page>) : WikiState()
     object State3 : WikiState()
     object State4 : WikiState()
     object Loading : WikiState()
