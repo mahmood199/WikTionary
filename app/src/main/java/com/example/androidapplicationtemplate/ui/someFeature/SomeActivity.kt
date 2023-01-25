@@ -2,16 +2,16 @@ package com.example.androidapplicationtemplate.ui.someFeature
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.androidapplicationtemplate.R
+import com.example.androidapplicationtemplate.core.extension.makeGone
+import com.example.androidapplicationtemplate.core.extension.makeVisible
+import com.example.androidapplicationtemplate.data.models.response.Page
 import com.example.androidapplicationtemplate.databinding.ActivitySomeBinding
 import com.example.androidapplicationtemplate.util.SnackBarBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -25,6 +25,7 @@ class SomeActivity : AppCompatActivity() {
 		binding = ActivitySomeBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		setObservers()
+		binding.rvWiki.makeGone()
 		triggerAction(SomeIntent.Intent1)
 	}
 
@@ -46,10 +47,8 @@ class SomeActivity : AppCompatActivity() {
 		when(it) {
 			SomeState.Idle -> {}
 			is SomeState.State1 -> {
-/*
-				Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-*/
-				binding.tvResponse.text = it.message
+				binding.cpiWiki.makeGone()
+				setDataOnRecyclerViewAdapter(it.pages)
 			}
 			SomeState.State2 -> {
 
@@ -61,13 +60,23 @@ class SomeActivity : AppCompatActivity() {
 
 			}
 			SomeState.Loading -> {
+				binding.cpiWiki.apply {
 
+					makeVisible()
+				}
 			}
 			is SomeState.Error -> {
 				SnackBarBuilder.getSnackbar(this,
                     it.message ?: getString(R.string.something_went_wrong),
                     Snackbar.LENGTH_SHORT)
 			}
+		}
+	}
+
+	private fun setDataOnRecyclerViewAdapter(pages: List<Page>) {
+		binding.rvWiki.apply {
+			makeVisible()
+			adapter = WikiAdapter(pages.toMutableList())
 		}
 	}
 

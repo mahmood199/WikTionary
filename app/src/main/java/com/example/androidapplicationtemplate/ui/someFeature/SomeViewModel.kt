@@ -58,7 +58,7 @@ class SomeViewModel @Inject constructor(
 						_state.value = SomeState.Loading
 					}
 					is Resource.Success -> {
-						_state.value = SomeState.State1(it.value.toString())
+						_state.value = SomeState.State1(it.value.query.pages)
 					}
 					else -> {}
 				}
