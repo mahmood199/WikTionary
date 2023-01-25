@@ -27,14 +27,14 @@ class WikiActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		binding = ActivitySomeBinding.inflate(layoutInflater)
-		setContentView(binding.root)
-		setObservers()
 		setUpViews()
+		setObservers()
 		triggerAction(WikiIntent.GetInitialData)
 	}
 
 	private fun setUpViews() {
+		binding = ActivitySomeBinding.inflate(layoutInflater)
+		setContentView(binding.root)
 		binding.rvWiki.makeGone()
 		setRecyclerViewScrollListener()
 	}
