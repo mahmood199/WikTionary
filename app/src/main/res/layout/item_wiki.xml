@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingHorizontal="@dimen/padding_12"
+    android:paddingTop="@dimen/padding_12">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_wiki"
+        android:layout_width="@dimen/size_120"
+        android:layout_height="@dimen/size_120"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_field_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_12"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_16"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_wiki"
+        app:layout_constraintTop_toTopOf="@+id/iv_wiki"
+        tools:text="Text Feild 1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_field_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_12"
+        android:layout_marginTop="@dimen/margin_12"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_16"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_wiki"
+        app:layout_constraintTop_toBottomOf="@+id/tv_field_1"
+        tools:text="Text Feild 2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_field_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_12"
+        android:layout_marginTop="@dimen/margin_12"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_wiki"
+        app:layout_constraintTop_toBottomOf="@+id/tv_field_2"
+        tools:text="Text Feild 2" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_wiki"
+        tools:layout_editor_absoluteX="12dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
