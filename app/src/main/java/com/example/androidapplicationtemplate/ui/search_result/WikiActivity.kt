@@ -173,6 +173,13 @@ class WikiActivity : AppCompatActivity() {
 			is WikiEffect.NavigateToWikiDetailScreen -> {
 				navigateToWikiDetailActivity(it.page)
 			}
+			WikiEffect.NoInternetAlert -> {
+				SnackBarBuilder.getSnackbar(
+                    this,
+                    getString(R.string.no_internet_message),
+                    Snackbar.LENGTH_SHORT)
+                    .show()
+			}
 		}
 	}
 
