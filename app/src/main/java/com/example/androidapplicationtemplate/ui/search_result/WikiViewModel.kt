@@ -60,8 +60,20 @@ class WikiViewModel @Inject constructor(
 					is WikiIntent.GetArgs -> {
 						getArgs(it.intent)
 					}
+					WikiIntent.LogSearches -> {
+
+					}
+					is WikiIntent.ShowDetails -> {
+						redirectToWikiDetailActivity(it.page)
+					}
 				}
 			}
+		}
+	}
+
+	private fun redirectToWikiDetailActivity(page: Page) {
+		viewModelScope.launch {
+			_effect.send(WikiEffect.NavigateToWikiDetailScreen(page))
 		}
 	}
 
