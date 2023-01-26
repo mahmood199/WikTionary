@@ -1,8 +1,7 @@
 package com.example.androidapplicationtemplate.ui.search_result
 
+import com.example.androidapplicationtemplate.data.models.response.Page
+
 sealed class WikiEffect {
-    object Effect1 : WikiEffect()
-    object Effect2 : WikiEffect()
-    object Effect3 : WikiEffect()
-    object Effect4 : WikiEffect()
+    data class NavigateToWikiDetailScreen(val page: Page) : WikiEffect()
 }
