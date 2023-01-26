@@ -14,9 +14,9 @@ class WikiRepositoryImpl @Inject constructor(
     val remoteDataSource: WikiRemoteDataSource,
 ) : WikiRepository {
 
-    override suspend fun someCrudOperation(): Resource<Response> {
+    override suspend fun someCrudOperation(searchQuery: String): Resource<Response> {
         return try {
-            val result = remoteDataSource.get()
+            val result = remoteDataSource.get(searchQuery)
             Resource.Success(result)
         } catch (exception: Exception) {
             Resource.Failure(FailureStatus.API_FAIL, FailureCode.RESOURCE_NOT_FOUND)
