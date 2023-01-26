@@ -12,6 +12,7 @@
         android:id="@+id/et_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:lines="1"
         android:layout_marginHorizontal="@dimen/margin_24"
         android:hint="@string/type_something_to_search"
         android:textColor="@color/black"
