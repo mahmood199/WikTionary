@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 
 data class Query(
-    @SerializedName("pages") val pages: List<Page>,
-    @SerializedName("redirects") val redirects: List<Redirect>,
+    @SerializedName("pages") val pages: List<Page> = listOf(),
+    @SerializedName("redirects") val redirects: List<Redirect> = listOf(),
 )
