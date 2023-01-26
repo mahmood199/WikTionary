@@ -1,5 +1,6 @@
 package com.example.androidapplicationtemplate.ui.search_result
 
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidapplicationtemplate.core.util.FailureStatus
@@ -9,6 +10,7 @@ import com.example.androidapplicationtemplate.data.models.response.Page
 import com.example.androidapplicationtemplate.domain.usecase.AllowPaginationUseCase
 import com.example.androidapplicationtemplate.domain.usecase.GetWikiUseCase
 import com.example.androidapplicationtemplate.domain.usecase.SomeUseCase
+import com.example.androidapplicationtemplate.util.BundleKeyIdentifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -54,9 +56,17 @@ class WikiViewModel @Inject constructor(
 					is WikiIntent.GetPaginatedResult -> {
 						fetchPaginatedData(it.lastItemPosition, it.rvItemCount, it.tCount)
 					}
+					is WikiIntent.GetArgs -> {
+						getArgs(it.intent)
+					}
 				}
 			}
 		}
+	}
+
+	private fun getArgs(intent: Intent) {
+		searchedQuery = intent.extras?.getString(BundleKeyIdentifier.SEARCH_QUERY) ?: ""
+		_state.value = WikiState.ArgumentsReceived(searchedQuery)
 	}
 
 	private fun fetchPaginatedData(
@@ -95,7 +105,7 @@ class WikiViewModel @Inject constructor(
 	private fun getWikis(i: Int) {
 		viewModelScope.launch {
 			_state.value = WikiState.Loading
-			val result = wikiUseCase.invoke().collect {
+			val result = wikiUseCase.invoke(searchedQuery).collect {
 				when(it) {
 					is Resource.Failure -> {
 						_state.value = WikiState.Error(it.failureStatus, it.message)
