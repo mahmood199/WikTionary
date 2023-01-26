@@ -6,7 +6,7 @@ import com.example.androidapplicationtemplate.data.models.response.Page
 @Dao
 interface WikiDao {
 
-    @Query("SELECT * FROM pages WHERE title=:searchedQuery")
+    @Query("SELECT * FROM pages WHERE title LIKE '%' || :searchedQuery || '%' ORDER BY pageId ASC")
     suspend fun getWikis(searchedQuery : String) : List<Page>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
