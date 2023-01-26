@@ -5,4 +5,6 @@ sealed class SearchEffect {
     object Effect2 : SearchEffect()
     object Effect3 : SearchEffect()
     object Effect4 : SearchEffect()
+    data class NavigateToSearchResultPage(val searchQuery: String) : SearchEffect()
+    object BlankSearchQuery : SearchEffect()
 }
