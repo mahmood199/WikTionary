@@ -37,8 +37,17 @@ class SearchViewModel @Inject constructor(
                     SearchIntent.GetInitialData -> {}
                     is SearchIntent.GetPaginatedResult -> {}
                     is SearchIntent.GoToSearchResultPage -> redirectToSearchResultScreen(it.searchQuery)
+                    is SearchIntent.GetSearchSuggestion -> {
+                        getRelatedSearchSuggestion()
+                    }
                 }
             }
+        }
+    }
+
+    private fun getRelatedSearchSuggestion() {
+        viewModelScope.launch {
+
         }
     }
 

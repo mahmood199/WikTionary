@@ -11,4 +11,5 @@ sealed class SearchIntent {
 
     object GetInitialData : SearchIntent()
     data class GoToSearchResultPage(val searchQuery: Editable?) : SearchIntent()
+    data class GetSearchSuggestion(val it: Editable?) : SearchIntent()
 }
