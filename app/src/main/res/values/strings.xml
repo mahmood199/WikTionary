@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WikTionary</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="blank_search_query_message">Type something to initiate a search</string>
 </resources>
