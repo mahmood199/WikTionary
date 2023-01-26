@@ -24,7 +24,6 @@ class WikiRepositoryImpl @Inject constructor(
             localResult.forEach {
                 Log.d("WikiRepositoryImpl0", "$it")
             }
-
             if(result.query.pages.size == localResult.size) {
                 Log.d("WikiRepositoryImpl1", " ${localResult.size} records inserted successfully")
                 val localResult = localDataSource.getAll(searchQuery)
