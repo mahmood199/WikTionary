@@ -103,4 +103,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
+    //Shimmer
+    def shimmerVersion = "0.5.0"
+    implementation("com.facebook.shimmer:shimmer:${shimmerVersion}")
+
 }
