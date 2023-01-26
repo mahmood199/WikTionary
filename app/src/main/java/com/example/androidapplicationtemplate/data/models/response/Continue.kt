@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class Continue(
     @SerializedName("gpsoffset")
-    val gpsOffset: Int,
+    val gpsOffset: Int = 0,
 )
