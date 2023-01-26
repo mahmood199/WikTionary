@@ -129,7 +129,9 @@ class WikiViewModel @Inject constructor(
 							_state.value = WikiState.ShowLoader
 					}
 					is Resource.Success -> {
-						delay(1000)
+						delay(1000) // to keep some lag to show progress bar or shimmer
+						if(it.value.didNetworkRequestFailed)
+							_effect.send(WikiEffect.NoInternetAlert)
 						if(i  == 0)
 							_state.value = WikiState.SendResult(it.value.query.pages)
 						else
