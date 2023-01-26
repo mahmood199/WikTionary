@@ -1,22 +1,78 @@
 package com.example.androidapplicationtemplate.ui.search
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.androidapplicationtemplate.databinding.ActivityMainBinding
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.androidapplicationtemplate.databinding.ActivitySearchBinding
 import com.example.androidapplicationtemplate.ui.search_result.WikiActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
-	private lateinit var binding: ActivityMainBinding
+
+	private lateinit var binding: ActivitySearchBinding
+	private val viewModel : SearchViewModel by viewModels()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		binding = ActivityMainBinding.inflate(layoutInflater)
-		setContentView(binding.root)
+		setUpViews()
+		setObservers()
+	}
 
+	private fun setUpViews() {
+		binding = ActivitySearchBinding.inflate(layoutInflater)
+		setContentView(binding.root)
+		setClickListeners()
+	}
+
+	private fun setClickListeners() {
 		binding.btnGoDifferentScreen.setOnClickListener {
 			startActivity(Intent(this, WikiActivity::class.java))
 		}
-
 	}
+
+	private fun setObservers() {
+		lifecycleScope.launch {
+			viewModel.state.collect {
+				setUIState(it)
+			}
+		}
+
+		lifecycleScope.launch {
+			viewModel.effect.collect {
+				setUIEffect(it)
+			}
+		}
+	}
+
+	private fun setUIState(it: SearchState) {
+		when(it) {
+			is SearchState.Error -> {}
+			SearchState.Idle -> {}
+			SearchState.Loading -> {}
+			is SearchState.SendPaginatedResult -> {}
+			is SearchState.SendResult -> {}
+		}
+	}
+
+	private fun setUIEffect(it: SearchEffect) {
+		when(it) {
+			SearchEffect.Effect1 -> {}
+			SearchEffect.Effect2 -> {}
+			SearchEffect.Effect3 -> {}
+			SearchEffect.Effect4 -> {}
+		}
+	}
+
+
+	private fun triggerAction(it: SearchIntent) {
+		lifecycleScope.launch {
+			viewModel.intents.send(it)
+		}
+	}
+
+
 }
