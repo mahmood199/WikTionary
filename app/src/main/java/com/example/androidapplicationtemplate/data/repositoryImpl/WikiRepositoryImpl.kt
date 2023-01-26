@@ -17,7 +17,7 @@ class WikiRepositoryImpl @Inject constructor(
     val remoteDataSource: WikiRemoteDataSource,
 ) : WikiRepository {
 
-    override suspend fun someCrudOperation(searchQuery: String): Resource<Response> {
+    override suspend fun getWikis(searchQuery: String): Resource<Response> {
         return try {
             val result = remoteDataSource.get(searchQuery)
             val localResult = localDataSource.addAll(result)

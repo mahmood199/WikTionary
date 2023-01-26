@@ -15,7 +15,7 @@ class GetWikiUseCase @Inject constructor(
 
     suspend operator fun invoke(searchQuery: String): Flow<Resource<Response>> = flow {
         emit(Resource.Loading)
-        val result = wikiRepository.someCrudOperation(searchQuery)
+        val result = wikiRepository.getWikis(searchQuery)
         emit(result)
     }.flowOn(Dispatchers.IO)
 
