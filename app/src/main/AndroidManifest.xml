@@ -13,6 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidApplicationTemplate">
         <activity
+            android:name=".ui.search_result_detail.WikiDetailActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.search_result.WikiActivity"
             android:exported="false" />
         <activity

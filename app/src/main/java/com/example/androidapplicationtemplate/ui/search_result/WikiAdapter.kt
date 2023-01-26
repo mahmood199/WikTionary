@@ -11,8 +11,10 @@ import com.example.androidapplicationtemplate.data.models.response.Page
 import com.example.androidapplicationtemplate.databinding.ItemWikiBinding
 
 class WikiAdapter(
-    private val pages: MutableList<Page>,
+    private val listener : (Page) -> Unit
 ) : RecyclerView.Adapter<WikiAdapter.ViewHolder>() {
+
+    private val pages: MutableList<Page> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemWikiBinding.inflate(
@@ -21,7 +23,10 @@ class WikiAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindData(pages[position])
+        holder.apply {
+            bindData(pages[position])
+            setClickListener(pages[position])
+        }
     }
 
     override fun getItemCount() = pages.size
@@ -45,8 +50,16 @@ class WikiAdapter(
                 Glide.with(root)
                     .load(page.thumbnail?.source ?: "")
                     .placeholder(ContextCompat.getDrawable(root.context, R.drawable.place_holder))
-                    .transition(DrawableTransitionOptions.withCrossFade(400))
+                    .transition(DrawableTransitionOptions.withCrossFade(WikiActivity.CROSSFADE_ANIMATION_TIME_DURATION))
                     .into(ivWiki)
+            }
+        }
+
+        fun setClickListener(page: Page) {
+            binding.apply {
+                root.setOnClickListener {
+                    listener.invoke(page)
+                }
             }
         }
 
