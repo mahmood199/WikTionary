@@ -13,6 +13,7 @@ import com.example.androidapplicationtemplate.domain.usecase.SomeUseCase
 import com.example.androidapplicationtemplate.util.BundleKeyIdentifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -104,16 +105,19 @@ class WikiViewModel @Inject constructor(
 	}
 	private fun getWikis(i: Int) {
 		viewModelScope.launch {
-			_state.value = WikiState.Loading
 			val result = wikiUseCase.invoke(searchedQuery).collect {
 				when(it) {
 					is Resource.Failure -> {
 						_state.value = WikiState.Error(it.failureStatus, it.message)
 					}
 					Resource.Loading -> {
-						_state.value = WikiState.Loading
+						if(i == 0)
+							_state.value = WikiState.ShowShimmer
+						else
+							_state.value = WikiState.ShowLoader
 					}
 					is Resource.Success -> {
+						delay(1000)
 						if(i  == 0)
 							_state.value = WikiState.SendResult(it.value.query.pages)
 						else
