@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.androidapplicationtemplate.R
 import com.example.androidapplicationtemplate.data.models.response.Page
 import com.example.androidapplicationtemplate.databinding.ItemWikiBinding
@@ -44,6 +45,7 @@ class WikiAdapter(
                 Glide.with(root)
                     .load(page.thumbnail?.source ?: "")
                     .placeholder(ContextCompat.getDrawable(root.context, R.drawable.place_holder))
+                    .transition(DrawableTransitionOptions.withCrossFade(400))
                     .into(ivWiki)
             }
         }
