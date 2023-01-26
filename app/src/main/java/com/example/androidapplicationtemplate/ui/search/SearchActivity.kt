@@ -2,11 +2,14 @@ package com.example.androidapplicationtemplate.ui.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.androidapplicationtemplate.R
 import com.example.androidapplicationtemplate.databinding.ActivitySearchBinding
 import com.example.androidapplicationtemplate.ui.search_result.WikiActivity
+import com.example.androidapplicationtemplate.util.BundleKeyIdentifier
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -29,8 +32,10 @@ class SearchActivity : AppCompatActivity() {
 	}
 
 	private fun setClickListeners() {
-		binding.btnGoDifferentScreen.setOnClickListener {
-			startActivity(Intent(this, WikiActivity::class.java))
+		binding.apply {
+			btnGoDifferentScreen.setOnClickListener {
+				triggerAction(SearchIntent.GoToSearchResultPage(etSearch.text))
+			}
 		}
 	}
 
@@ -64,6 +69,14 @@ class SearchActivity : AppCompatActivity() {
 			SearchEffect.Effect2 -> {}
 			SearchEffect.Effect3 -> {}
 			SearchEffect.Effect4 -> {}
+			is SearchEffect.NavigateToSearchResultPage -> {
+				startActivity(
+                    Intent(this, WikiActivity::class.java)
+                        .putExtra(BundleKeyIdentifier.SEARCH_QUERY, it.searchQuery))
+			}
+			SearchEffect.BlankSearchQuery -> {
+				Toast.makeText(this, getString(R.string.blank_search_query_message), Toast.LENGTH_SHORT).show()
+			}
 		}
 	}
 

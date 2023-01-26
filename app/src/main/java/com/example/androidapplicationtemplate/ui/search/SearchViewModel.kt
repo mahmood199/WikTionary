@@ -1,10 +1,9 @@
 package com.example.androidapplicationtemplate.ui.search
 
+import android.text.Editable
+import android.text.TextUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.androidapplicationtemplate.ui.search_result.WikiEffect
-import com.example.androidapplicationtemplate.ui.search_result.WikiIntent
-import com.example.androidapplicationtemplate.ui.search_result.WikiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -37,7 +36,19 @@ class SearchViewModel @Inject constructor(
                 when(it) {
                     SearchIntent.GetInitialData -> {}
                     is SearchIntent.GetPaginatedResult -> {}
+                    is SearchIntent.GoToSearchResultPage -> redirectToSearchResultScreen(it.searchQuery)
                 }
+            }
+        }
+    }
+
+    private fun redirectToSearchResultScreen(searchQuery: Editable?) {
+        viewModelScope.launch {
+            if(TextUtils.isEmpty(searchQuery)) {
+                _effect.send(SearchEffect.BlankSearchQuery)
+            }
+            else {
+                _effect.send(SearchEffect.NavigateToSearchResultPage(searchQuery.toString()))
             }
         }
     }
