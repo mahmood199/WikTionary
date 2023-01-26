@@ -1,13 +1,22 @@
 package com.example.androidapplicationtemplate.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Query
-import com.example.androidapplicationtemplate.data.models.entity.LocalEntity
+import androidx.room.*
+import com.example.androidapplicationtemplate.data.models.response.Page
 
 @Dao
 interface WikiDao {
 
-    @Query("select * from local_entity")
-    suspend fun getWikis() : List<LocalEntity>
+    @Query("SELECT * FROM pages WHERE title=:searchedQuery")
+    suspend fun getWikis(searchedQuery : String) : List<Page>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @JvmSuppressWildcards
+    suspend fun insertAllWikis(list: List<Page>) : LongArray
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWiki(page: Page) : Long
+
+    @Delete
+    suspend fun deleteWiki(page: Page)
 
 }
