@@ -1,7 +1,9 @@
 package com.example.androidapplicationtemplate.ui.search_result
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +31,7 @@ class WikiActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setUpViews()
 		setObservers()
-		triggerAction(WikiIntent.GetInitialData)
+		getArgs(intent)
 	}
 
 	private fun setUpViews() {
@@ -81,6 +83,11 @@ class WikiActivity : AppCompatActivity() {
 		}
 	}
 
+	private fun getArgs(intent: Intent) {
+		triggerAction(WikiIntent.GetArgs(intent))
+	}
+
+
 	private fun setUIState(it: WikiState) {
 		when(it) {
 			WikiState.Idle -> {}
@@ -100,6 +107,9 @@ class WikiActivity : AppCompatActivity() {
 				SnackBarBuilder.getSnackbar(this,
                     it.message ?: getString(R.string.something_went_wrong),
                     Snackbar.LENGTH_SHORT)
+			}
+			is WikiState.ArgumentsReceived -> {
+				triggerAction(WikiIntent.GetInitialData)
 			}
 		}
 	}
