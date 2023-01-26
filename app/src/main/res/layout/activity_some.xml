@@ -37,11 +37,11 @@
         android:layout_height="@dimen/size_64"
         android:indeterminate="true"
         android:progress="60"
-        app:indicatorColor="@color/text_color_green"
+        app:indicatorColor="@color/teal_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:trackColor="@color/text_color_orange"
+        app:trackColor="@color/teal_200"
         app:trackThickness="@dimen/size_8" />
 
     <androidx.recyclerview.widget.RecyclerView
