@@ -5,5 +5,8 @@ import javax.inject.Inject
 
 class WikiLocalDataSource @Inject constructor(wikiDao: WikiDao) {
 
+    suspend fun addAll() {
+
+    }
 
 }
