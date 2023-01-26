@@ -10,10 +10,11 @@ class WikiRemoteDataSource @Inject constructor(
 
 	companion object {
 		const val LIMIT = 20
+		const val GPS_LIMIT = 20
 	}
 
 	suspend fun get(searchQuery: String): Response {
-		return wikiService.getWiki(searchQuery, LIMIT)
+		return wikiService.getWiki(searchQuery, LIMIT, GPS_LIMIT)
 	}
 
 }
