@@ -3,6 +3,8 @@ package com.example.androidapplicationtemplate.ui.search_result
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,12 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidapplicationtemplate.R
 import com.example.androidapplicationtemplate.core.extension.makeGone
 import com.example.androidapplicationtemplate.core.extension.makeVisible
+import com.example.androidapplicationtemplate.data.local.localDataSource.WikiLocalDataSource
 import com.example.androidapplicationtemplate.data.models.response.Page
 import com.example.androidapplicationtemplate.databinding.ActivitySomeBinding
+import com.example.androidapplicationtemplate.util.BundleKeyIdentifier
 import com.example.androidapplicationtemplate.util.SnackBarBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class WikiActivity : AppCompatActivity() {
@@ -38,6 +43,15 @@ class WikiActivity : AppCompatActivity() {
 		binding = ActivitySomeBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		binding.rvWiki.makeGone()
+		setListeners()
+	}
+
+	private fun setListeners() {
+		binding.apply {
+			getAllLocalWikis.setOnClickListener {
+				triggerAction(WikiIntent.LogSearches)
+			}
+		}
 		setRecyclerViewScrollListener()
 	}
 
@@ -101,9 +115,11 @@ class WikiActivity : AppCompatActivity() {
 				appendPagesToTheEndOfList(it.pages)
 			}
 			is WikiState.Error -> {
+				hideShimmer()
+				binding.cpiWiki.makeGone()
 				SnackBarBuilder.getSnackbar(this,
                     it.message ?: getString(R.string.something_went_wrong),
-                    Snackbar.LENGTH_SHORT)
+                    Snackbar.LENGTH_SHORT).show()
 			}
 			is WikiState.ArgumentsReceived -> {
 				triggerAction(WikiIntent.GetInitialData)

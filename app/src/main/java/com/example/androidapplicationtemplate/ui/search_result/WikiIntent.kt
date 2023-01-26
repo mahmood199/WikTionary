@@ -10,4 +10,5 @@ sealed class WikiIntent {
     ) : WikiIntent()
     data class GetArgs(val intent: Intent) : WikiIntent()
     object GetInitialData : WikiIntent()
+    object LogSearches : WikiIntent()
 }
