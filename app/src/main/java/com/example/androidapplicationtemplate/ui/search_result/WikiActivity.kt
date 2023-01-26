@@ -93,15 +93,12 @@ class WikiActivity : AppCompatActivity() {
 			WikiState.Idle -> {}
 			is WikiState.SendResult -> {
 				binding.cpiWiki.makeGone()
+				hideShimmer()
 				setDataOnRecyclerViewAdapter(it.pages)
 			}
 			is WikiState.SendPaginatedResult -> {
+				binding.cpiWiki.makeGone()
 				appendPagesToTheEndOfList(it.pages)
-			}
-			WikiState.Loading -> {
-				binding.cpiWiki.apply {
-					makeVisible()
-				}
 			}
 			is WikiState.Error -> {
 				SnackBarBuilder.getSnackbar(this,
@@ -111,6 +108,32 @@ class WikiActivity : AppCompatActivity() {
 			is WikiState.ArgumentsReceived -> {
 				triggerAction(WikiIntent.GetInitialData)
 			}
+			WikiState.ShowLoader -> {
+				binding.cpiWiki.apply {
+					makeVisible()
+				}
+			}
+			WikiState.ShowShimmer -> {
+				showAnimatingShimmer()
+			}
+		}
+	}
+
+	private fun showAnimatingShimmer() {
+		binding.apply {
+			rvWiki.makeGone()
+			cpiWiki.makeGone()
+			nsvSearchResult.makeVisible()
+			sflSearchResult.showShimmer(true)
+			sflSearchResult.startShimmer()
+		}
+	}
+
+	private fun hideShimmer() {
+		binding.apply {
+			nsvSearchResult.makeGone()
+			sflSearchResult.showShimmer(false)
+			sflSearchResult.stopShimmer()
 		}
 	}
 
