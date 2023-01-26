@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidApplicationTemplate">
         <activity
-            android:name=".ui.someFeature.WikiActivity"
+            android:name=".ui.search_result.WikiActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"

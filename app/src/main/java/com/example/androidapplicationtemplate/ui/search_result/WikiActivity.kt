@@ -1,4 +1,4 @@
-package com.example.androidapplicationtemplate.ui.someFeature
+package com.example.androidapplicationtemplate.ui.search_result
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

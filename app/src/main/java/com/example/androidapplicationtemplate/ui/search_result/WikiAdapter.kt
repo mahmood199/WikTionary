@@ -1,4 +1,4 @@
-package com.example.androidapplicationtemplate.ui.someFeature
+package com.example.androidapplicationtemplate.ui.search_result
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.example.androidapplicationtemplate.ui.someFeature
+package com.example.androidapplicationtemplate.ui.search_result
 
 sealed class WikiIntent {
     data class GetPaginatedResult(

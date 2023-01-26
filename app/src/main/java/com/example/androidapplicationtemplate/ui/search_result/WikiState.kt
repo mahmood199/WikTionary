@@ -1,4 +1,4 @@
-package com.example.androidapplicationtemplate.ui.someFeature
+package com.example.androidapplicationtemplate.ui.search_result
 
 import com.example.androidapplicationtemplate.core.util.FailureStatus
 import com.example.androidapplicationtemplate.data.models.response.Page
