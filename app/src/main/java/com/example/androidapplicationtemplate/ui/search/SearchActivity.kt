@@ -1,4 +1,4 @@
-package com.example.androidapplicationtemplate.ui
+package com.example.androidapplicationtemplate.ui.search
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.example.androidapplicationtemplate.databinding.ActivityMainBinding
 import com.example.androidapplicationtemplate.ui.search_result.WikiActivity
 
-class MainActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
